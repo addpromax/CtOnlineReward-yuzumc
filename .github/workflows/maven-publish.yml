@@ -11,15 +11,17 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '21'
           distribution: 'adopt'
       - name: Build Plugin
-        run: mvn package
+        run: mvn -V -B clean package --file pom.xml
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
